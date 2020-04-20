@@ -9,7 +9,7 @@
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    /* animation: App-logo-spin infinite 20s linear; */
   }
 }
 
@@ -35,4 +35,21 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.stack {
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 128px;
+  background-color: gray;
+  border-radius: 8px;
+}
+
+.token {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  z-index: 1;
+  position: absolute;
 }
