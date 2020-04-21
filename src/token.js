@@ -7,13 +7,17 @@ class Token extends React.Component {
     }
 
     render() {
-        const divStyle = {
+        var divStyle = {
             backgroundColor: this.props.color,
             top: this.props.yPos,
             left: this.props.xPos
         };
+        let className = 'token';
+        if (this.props.selected === this.props.id) {
+            className += ' selected';
+        }
         return (
-            <div class="token" style={divStyle}></div>
+            <div className={className} style={divStyle}></div>
         )
     }
 }

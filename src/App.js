@@ -15,11 +15,13 @@ class App extends React.Component {
         colorSet: 4,
         stacks: 6,
         stackCapacity: 4
-      }
+      },
+      selectedStack: null,
+      selectedToken: null
     }
-    
     this.chooseRandomStack = this.chooseRandomStack.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.selectTopOfStack = this.selectTopOfStack.bind(this);
   }
 
   startGame() {
@@ -32,28 +34,33 @@ class App extends React.Component {
         id: i,
         count: 0,
         xPos: (i + 1) * xPosSpacing,
-        yPos: 20
+        yPos: 20,
+        contents: [],
+        selected: false
       }
       stacks.push(stack);
     }
 
     let tokens = [];
+    let tokenCounter = 0;
     for (var i = 0; i < (this.state.game.colors); i++) {
       for (var j = 0; j < this.state.game.colorSet; j++) {
+        tokenCounter++;
         let chosenStack = this.chooseRandomStack(stacks);
         stacks[chosenStack].count++;
         let token = {
-          id: i,
+          id: tokenCounter,
           color: colors[j],
           stack: chosenStack,
           stackPos: stacks[chosenStack].count,
           xPos: stacks[chosenStack].xPos,
-          yPos: (stacks[chosenStack].count * 5) + stacks[chosenStack].yPos
+          yPos: (stacks[chosenStack].count * -5) + (stacks[chosenStack].yPos + 50)
         }
+        stacks[chosenStack].contents.push(token.id)
         tokens.push(token);
       }
     }
-
+    console.log(stacks);
     this.setState((state) => ({
       stacks: stacks,
       tokens: tokens
@@ -68,18 +75,39 @@ class App extends React.Component {
     return stackChoice;
   }
 
+  selectTopOfStack(id) {
+    let topToken;
+    if (this.state.stacks[id].count > 0 && id !== this.state.selectedStack) {
+      topToken = this.state.stacks[id].contents[this.state.stacks[id].contents.length - 1]
+      this.setState((state) => ({
+        selectedStack: id,
+        selectedToken: topToken
+      }))
+    } else {
+      console.log('else');
+      this.setState((state) => ({
+        selectedStack: null,
+        selectedToken: null
+      }))
+    }
+  }
+
+  getState() {
+    console.log(this.state);
+  }
+
 
   render() {
     let stacks = [];
     for (var i = 0; i < this.state.stacks.length; i++) {
       let xPos = this.state.stacks[i].xPos  + '%';
-      stacks.push(<Stack top="20%" left={xPos} key={this.state.stacks[i].id} />);
+      stacks.push(<Stack top="20%" left={xPos} id={i} function={this.selectTopOfStack} selected={this.state.selectedStack} />);
     }
     let tokens = [];
     for (var i = 0; i < this.state.tokens.length; i++) {
       let xPos = this.state.tokens[i].xPos  + '%';
       let yPos = this.state.tokens[i].yPos  + '%';
-      tokens.push(<Token id={this.state.tokens[i].id} color={this.state.tokens[i].color} xPos={xPos} yPos={yPos} />);
+      tokens.push(<Token id={this.state.tokens[i].id} color={this.state.tokens[i].color} xPos={xPos} yPos={yPos} selected={this.state.selectedToken} />);
     }
 
     return (
@@ -89,9 +117,12 @@ class App extends React.Component {
             {tokens}
             {/* <Token color="lightblue" /> */}
             <img src={logo} className="App-logo" alt="logo" />
-            <p onClick={() => this.startGame()}>
-              Edit <code>src/App.js</code> and save to reload.
-            </p>
+            <button className="button" onClick={() => this.startGame()}>
+              Start Game
+            </button>
+            <button className="button" onClick={() => this.getState()}>
+              Log App State
+            </button>
             <a
               className="App-link"
               href="https://reactjs.org"

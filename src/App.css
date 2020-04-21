@@ -40,10 +40,14 @@
 .stack {
   display: block;
   position: absolute;
-  width: 64px;
-  height: 128px;
-  background-color: gray;
+  width: 5%;
+  height: 50%;
+  background-color: rgba(128,128,128, 0.2);
   border-radius: 8px;
+}
+
+.stack.selected {
+  background-color: rgba(128,128,128, 0.3);
 }
 
 .token {
@@ -52,4 +56,21 @@
   border-radius: 50%;
   z-index: 1;
   position: absolute;
+  pointer-events: none;
+}
+
+.token.selected {
+  border: 3px solid white;
+  width: 64px;
+  height: 64px;
+  transform: translateY(-64px);
+}
+
+.button {
+  padding: 1rem 2rem;
+  margin: 1rem;
+  font-size: 24px;
+  background-color: lightblue;
+  border: none;
+  border-radius: 0.5rem;
 }

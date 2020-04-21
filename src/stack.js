@@ -12,8 +12,14 @@ class Stack extends React.Component {
             top: this.props.top,
             left: this.props.left
         };
+        let id = this.props.id;
+        let className = 'stack';
+        if (this.props.selected === this.props.id) {
+            className += ' selected';
+        }
+
         return (
-            <div class="stack" style={divStyle}></div>
+            <div className={className} style={divStyle} onClick={() => this.props.function(id)}></div>
         )
     }
 }
