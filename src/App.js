@@ -17,11 +17,15 @@ class App extends React.Component {
         stackCapacity: 4
       },
       selectedStack: null,
+      previouslySelectedStack: null,
       selectedToken: null
     }
     this.chooseRandomStack = this.chooseRandomStack.bind(this);
     this.startGame = this.startGame.bind(this);
-    this.selectTopOfStack = this.selectTopOfStack.bind(this);
+    this.manageStackAction = this.manageStackAction.bind(this);
+    this.selectStack = this.selectStack.bind(this);
+    this.deselectStack = this.deselectStack.bind(this);
+    this.moveToken = this.moveToken.bind(this);
   }
 
   startGame() {
@@ -60,7 +64,6 @@ class App extends React.Component {
         tokens.push(token);
       }
     }
-    console.log(stacks);
     this.setState((state) => ({
       stacks: stacks,
       tokens: tokens
@@ -75,21 +78,74 @@ class App extends React.Component {
     return stackChoice;
   }
 
-  selectTopOfStack(id) {
-    let topToken;
-    if (this.state.stacks[id].count > 0 && id !== this.state.selectedStack) {
-      topToken = this.state.stacks[id].contents[this.state.stacks[id].contents.length - 1]
-      this.setState((state) => ({
-        selectedStack: id,
-        selectedToken: topToken
-      }))
+  manageStackAction(id) {
+    if (this.state.selectedStack === null) {
+      if (this.state.stacks[id].count > 0) {
+        this.setState((state) => ({
+          previouslySelectedStack: id
+        }))
+        this.selectStack(id);
+      } else {
+        return;
+      }
     } else {
-      console.log('else');
-      this.setState((state) => ({
-        selectedStack: null,
-        selectedToken: null
-      }))
+      if (this.state.selectedStack === id) {
+        this.deselectStack(id);
+      } else {
+        let oldStackContent = Array.from(this.state.stacks[this.state.previouslySelectedStack].contents);
+        this.setState((state) => ({
+          stacks: state.stacks.map(
+            el => (el.id === state.previouslySelectedStack) ? {
+              ...el,
+              contents: oldStackContent
+            } : el
+          )
+        }))
+        this.moveToken(id);
+      }
     }
+  }
+
+  selectStack(id) {
+    let topToken;
+    topToken = this.state.stacks[id].contents[this.state.stacks[id].contents.length - 1];
+    this.setState((state) => ({
+      selectedStack: id,
+      selectedToken: topToken
+    }))
+  }
+
+  deselectStack(id) {
+    console.log('deselect');
+    this.setState((state) => ({
+      selectedStack: null,
+      selectedToken: null
+    }))
+  }
+
+  moveToken(stackID) {
+    console.log(stackID);
+    let key = this.state.selectedToken;
+    let newStackContent = Array.from(this.state.stacks[stackID].contents);
+    console.log(newStackContent);
+    newStackContent.push(this.state.selectedToken);
+    this.deselectStack(stackID);
+    this.setState((state) => ({
+      tokens: state.tokens.map(
+        el => (el.id === key) ? {
+          ...el,
+          xPos: state.stacks[stackID].xPos,
+          yPos: (((state.stacks[stackID].count + 1) * -5) + state.stacks[stackID].yPos + 50)
+        } : el
+      ),
+      stacks: state.stacks.map(
+        el => (el.id === stackID) ? {
+          ...el,
+          contents: newStackContent
+        } : el
+      )
+    }))
+    console.log(this.state.stacks);
   }
 
   getState() {
@@ -101,7 +157,7 @@ class App extends React.Component {
     let stacks = [];
     for (var i = 0; i < this.state.stacks.length; i++) {
       let xPos = this.state.stacks[i].xPos  + '%';
-      stacks.push(<Stack top="20%" left={xPos} id={i} function={this.selectTopOfStack} selected={this.state.selectedStack} />);
+      stacks.push(<Stack top="20%" left={xPos} id={i} function={this.manageStackAction} selected={this.state.selectedStack} />);
     }
     let tokens = [];
     for (var i = 0; i < this.state.tokens.length; i++) {

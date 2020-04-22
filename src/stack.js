@@ -14,6 +14,7 @@ class Stack extends React.Component {
         };
         let id = this.props.id;
         let className = 'stack';
+        console.log(this.props.selected);
         if (this.props.selected === this.props.id) {
             className += ' selected';
         }

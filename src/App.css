@@ -57,6 +57,7 @@
   z-index: 1;
   position: absolute;
   pointer-events: none;
+  transition: 1s;
 }
 
 .token.selected {
