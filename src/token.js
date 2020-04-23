@@ -17,7 +17,7 @@ class Token extends React.Component {
             className += ' selected';
         }
         return (
-            <div className={className} style={divStyle}></div>
+            <div className={className} style={divStyle} id={'t' + this.props.id}></div>
         )
     }
 }

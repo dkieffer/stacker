@@ -29,7 +29,7 @@ class App extends React.Component {
   }
 
   startGame() {
-    console.log('start game punks');
+    // console.log('start game punks');
     const colors = ['red', 'green', 'blue', 'yellow'];
     let xPosSpacing = 80 / this.state.game.stacks;
     let stacks = [];
@@ -86,22 +86,30 @@ class App extends React.Component {
         }))
         this.selectStack(id);
       } else {
-        return;
+        return
       }
     } else {
       if (this.state.selectedStack === id) {
         this.deselectStack(id);
       } else {
-        let oldStackContent = Array.from(this.state.stacks[this.state.previouslySelectedStack].contents);
-        this.setState((state) => ({
-          stacks: state.stacks.map(
-            el => (el.id === state.previouslySelectedStack) ? {
-              ...el,
-              contents: oldStackContent
-            } : el
-          )
-        }))
-        this.moveToken(id);
+        if (this.state.stacks[id].contents.length >= this.state.game.colorSet) {
+          this.deselectStack(this.state.previouslySelectedStack);
+          this.selectStack(id);
+        } else {
+          let oldStackContent = Array.from(this.state.stacks[this.state.previouslySelectedStack].contents);
+          // console.log('old stack content below'); 
+          oldStackContent.pop();
+          // console.log(oldStackContent);
+          this.setState((state) => ({
+            stacks: state.stacks.map(
+              el => (el.id === state.previouslySelectedStack) ? {
+                ...el,
+                contents: oldStackContent,
+                count: state.stacks[id].count - 1
+              } : el
+            )
+          }), function() {this.moveToken(id)})
+        }
       }
     }
   }
@@ -116,7 +124,7 @@ class App extends React.Component {
   }
 
   deselectStack(id) {
-    console.log('deselect');
+    // console.log('deselect');
     this.setState((state) => ({
       selectedStack: null,
       selectedToken: null
@@ -124,10 +132,10 @@ class App extends React.Component {
   }
 
   moveToken(stackID) {
-    console.log(stackID);
+    // console.log(stackID);
     let key = this.state.selectedToken;
     let newStackContent = Array.from(this.state.stacks[stackID].contents);
-    console.log(newStackContent);
+    // console.log(newStackContent);
     newStackContent.push(this.state.selectedToken);
     this.deselectStack(stackID);
     this.setState((state) => ({
@@ -141,11 +149,31 @@ class App extends React.Component {
       stacks: state.stacks.map(
         el => (el.id === stackID) ? {
           ...el,
-          contents: newStackContent
+          contents: newStackContent,
+          count: state.stacks[stackID].count + 1
         } : el
       )
-    }))
-    console.log(this.state.stacks);
+    }), this.checkForWin)
+    // console.log(this.state.stacks);
+  }
+
+  checkForWin() {
+    console.log('CHECK FOR WIN');
+    for (var i = 0; i < this.state.stacks.length; i++) {
+      console.log('Stack ' + i);
+      console.log('Contents: ' + this.state.stacks[i].contents);
+      if (this.state.stacks[i].contents.length !== this.state.game.colorSet || this.state.stacks[i].contents.length !== 0) {
+        console.log('Stack not full, quit this check');
+        return
+      }
+      for (var j = 0; j < this.state.stacks[i].contents.length; j++) {
+        if (this.state.tokens[this.state.stacks[i].contents[j]].color !== this.state.tokens[this.state.stacks[i].contents[0]].color) {
+          console.log('fail');
+          return
+        }
+
+      }
+    }
   }
 
   getState() {

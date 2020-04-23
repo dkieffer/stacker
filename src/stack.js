@@ -20,7 +20,7 @@ class Stack extends React.Component {
         }
 
         return (
-            <div className={className} style={divStyle} onClick={() => this.props.function(id)}></div>
+            <div id={'s' + this.props.id} className={className} style={divStyle} onClick={() => this.props.function(id)}></div>
         )
     }
 }
