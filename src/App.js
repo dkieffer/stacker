@@ -36,7 +36,6 @@ class App extends React.Component {
     for (var i = 0; i < this.state.game.stacks; i++) {
       let stack = {
         id: i,
-        count: 0,
         xPos: (i + 1) * xPosSpacing,
         yPos: 20,
         contents: [],
@@ -51,14 +50,13 @@ class App extends React.Component {
       for (var j = 0; j < this.state.game.colorSet; j++) {
         tokenCounter++;
         let chosenStack = this.chooseRandomStack(stacks);
-        stacks[chosenStack].count++;
         let token = {
           id: tokenCounter,
           color: colors[j],
           stack: chosenStack,
-          stackPos: stacks[chosenStack].count,
+          stackPos: stacks[chosenStack].contents.length,
           xPos: stacks[chosenStack].xPos,
-          yPos: (stacks[chosenStack].count * -5) + (stacks[chosenStack].yPos + 50)
+          yPos: (stacks[chosenStack].contents.length * -5) + (stacks[chosenStack].yPos + 50)
         }
         stacks[chosenStack].contents.push(token.id)
         tokens.push(token);
@@ -72,7 +70,7 @@ class App extends React.Component {
 
   chooseRandomStack(stackSet) {
     var stackChoice = Math.floor(Math.random() * this.state.game.stacks);
-    while (stackSet[stackChoice].count > this.state.game.stackCapacity - 1) {
+    while (stackSet[stackChoice].contents.length > this.state.game.stackCapacity - 1) {
       stackChoice = Math.floor(Math.random() * this.state.game.stacks)
     }
     return stackChoice;
@@ -80,7 +78,7 @@ class App extends React.Component {
 
   manageStackAction(id) {
     if (this.state.selectedStack === null) {
-      if (this.state.stacks[id].count > 0) {
+      if (this.state.stacks[id].contents.length > 0) {
         this.setState((state) => ({
           previouslySelectedStack: id
         }))
@@ -94,7 +92,6 @@ class App extends React.Component {
       } else {
         if (this.state.stacks[id].contents.length >= this.state.game.colorSet) {
           this.deselectStack(this.state.previouslySelectedStack);
-          this.selectStack(id);
         } else {
           let oldStackContent = Array.from(this.state.stacks[this.state.previouslySelectedStack].contents);
           // console.log('old stack content below'); 
@@ -105,7 +102,6 @@ class App extends React.Component {
               el => (el.id === state.previouslySelectedStack) ? {
                 ...el,
                 contents: oldStackContent,
-                count: state.stacks[id].count - 1
               } : el
             )
           }), function() {this.moveToken(id)})
@@ -143,14 +139,13 @@ class App extends React.Component {
         el => (el.id === key) ? {
           ...el,
           xPos: state.stacks[stackID].xPos,
-          yPos: (((state.stacks[stackID].count + 1) * -5) + state.stacks[stackID].yPos + 50)
+          yPos: (((state.stacks[stackID].contents.length) * -5) + state.stacks[stackID].yPos + 50)
         } : el
       ),
       stacks: state.stacks.map(
         el => (el.id === stackID) ? {
           ...el,
           contents: newStackContent,
-          count: state.stacks[stackID].count + 1
         } : el
       )
     }), this.checkForWin)
