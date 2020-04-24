@@ -36,13 +36,14 @@ class App extends React.Component {
   startGame() {
     // console.log('start game punks');
 
-    const colors = ['red', 'green', 'blue', 'yellow'];
-    let xPosSpacing = 80 / this.state.game.stacks;
+    const colors = ['#ed6635', '#fdba13', '#f9edd6', '#455987', '#1e2452'];
+    // let xPosSpacing = 80 / this.state.game.stacks;
+    let xPosSpacing = 48;
     let stacks = [];
     for (var i = 0; i < this.state.game.stacks; i++) {
       let stack = {
         id: i,
-        xPos: (i + 1) * xPosSpacing,
+        xPos: (i) * xPosSpacing,
         yPos: 20,
         contents: [],
         selected: false
