@@ -13,15 +13,23 @@
   }
 }
 
-.App-header {
+.view {
+  top: 0;
+  position: absolute;
   background-color: #282c34;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  display: none;
+}
+
+.view.active {
+  display: block;
 }
 
 .App-link {
@@ -40,7 +48,7 @@
 .stack {
   display: block;
   position: absolute;
-  width: 5%;
+  width: 45px;
   height: 50%;
   background-color: rgba(128,128,128, 0.2);
   border-radius: 8px;

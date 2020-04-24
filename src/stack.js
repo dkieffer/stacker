@@ -10,11 +10,12 @@ class Stack extends React.Component {
     render() {
         const divStyle = {
             top: this.props.top,
-            left: this.props.left
+            left: this.props.left,
+            height: this.props.height
         };
         let id = this.props.id;
         let className = 'stack';
-        console.log(this.props.selected);
+        // console.log(this.props.selected);
         if (this.props.selected === this.props.id) {
             className += ' selected';
         }

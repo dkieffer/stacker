@@ -3,11 +3,15 @@ import logo from './logo.svg';
 import './App.css';
 import Stack from './stack';
 import Token from './token';
+import Menu from './menu';
+import Win from './win';
+import Game from './game';
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      activeView: 'start',
       tokens: [],
       stacks: [],
       game: {
@@ -26,10 +30,12 @@ class App extends React.Component {
     this.selectStack = this.selectStack.bind(this);
     this.deselectStack = this.deselectStack.bind(this);
     this.moveToken = this.moveToken.bind(this);
+    this.quitGame = this.quitGame.bind(this);
   }
 
   startGame() {
     // console.log('start game punks');
+
     const colors = ['red', 'green', 'blue', 'yellow'];
     let xPosSpacing = 80 / this.state.game.stacks;
     let stacks = [];
@@ -48,7 +54,7 @@ class App extends React.Component {
     let tokenCounter = 0;
     for (var i = 0; i < (this.state.game.colors); i++) {
       for (var j = 0; j < this.state.game.colorSet; j++) {
-        tokenCounter++;
+        
         let chosenStack = this.chooseRandomStack(stacks);
         let token = {
           id: tokenCounter,
@@ -58,11 +64,13 @@ class App extends React.Component {
           xPos: stacks[chosenStack].xPos,
           yPos: (stacks[chosenStack].contents.length * -5) + (stacks[chosenStack].yPos + 50)
         }
+        tokenCounter++;
         stacks[chosenStack].contents.push(token.id)
         tokens.push(token);
       }
     }
     this.setState((state) => ({
+      activeView: 'game',
       stacks: stacks,
       tokens: tokens
     }))
@@ -155,20 +163,34 @@ class App extends React.Component {
   checkForWin() {
     console.log('CHECK FOR WIN');
     for (var i = 0; i < this.state.stacks.length; i++) {
-      console.log('Stack ' + i);
-      console.log('Contents: ' + this.state.stacks[i].contents);
-      if (this.state.stacks[i].contents.length !== this.state.game.colorSet || this.state.stacks[i].contents.length !== 0) {
-        console.log('Stack not full, quit this check');
+      // console.log('Stack ' + i);
+      // console.log('Contents: ' + this.state.stacks[i].contents);
+      if (this.state.stacks[i].contents.length !== this.state.game.colorSet && this.state.stacks[i].contents.length !== 0) {
+        // console.log('Stack not full, quit this check');
         return
       }
       for (var j = 0; j < this.state.stacks[i].contents.length; j++) {
+        console.log('stack '  + i + ', token ' + j);
         if (this.state.tokens[this.state.stacks[i].contents[j]].color !== this.state.tokens[this.state.stacks[i].contents[0]].color) {
-          console.log('fail');
+          // console.log('fail');
           return
         }
-
       }
     }
+    this.endGame();
+    console.log('you win');
+  }
+
+  endGame() {
+    this.setState((state) => ({
+      activeView: 'win',
+    }));
+  }
+
+  quitGame() {
+    this.setState((state) => ({
+      activeView: 'start',
+    }));
   }
 
   getState() {
@@ -180,7 +202,8 @@ class App extends React.Component {
     let stacks = [];
     for (var i = 0; i < this.state.stacks.length; i++) {
       let xPos = this.state.stacks[i].xPos  + '%';
-      stacks.push(<Stack top="20%" left={xPos} id={i} function={this.manageStackAction} selected={this.state.selectedStack} />);
+      let height = (this.state.game.stackCapacity * 45) + 'px';
+      stacks.push(<Stack top="50%" left={xPos} height={height} id={i} function={this.manageStackAction} selected={this.state.selectedStack} />);
     }
     let tokens = [];
     for (var i = 0; i < this.state.tokens.length; i++) {
@@ -191,30 +214,22 @@ class App extends React.Component {
 
     return (
         <div className="App">
-          <header className="App-header">
-            {stacks}
-            {tokens}
-            {/* <Token color="lightblue" /> */}
-            <img src={logo} className="App-logo" alt="logo" />
-            <button className="button" onClick={() => this.startGame()}>
-              Start Game
-            </button>
-            <button className="button" onClick={() => this.getState()}>
-              Log App State
-            </button>
-            <a
-              className="App-link"
-              href="https://reactjs.org"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn React
-            </a>
-          </header>
+          <Menu startGame={this.startGame} activeView={this.state.activeView} />
+          <Win startGame={this.startGame} activeView={this.state.activeView} />
+          <Game 
+            stacks={this.state.stacks}
+            game={this.state.game}
+            selectStack={this.state.selectedStack}
+            tokens={this.state.tokens}
+            selectedToken={this.state.selectedToken}
+            activeView={this.state.activeView} 
+            manageStackAction={this.manageStackAction}
+            quitGame={this.quitGame}
+          />
+
         </div>
       );
     }
   }
-
-
+  
 export default App;
