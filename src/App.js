@@ -15,9 +15,9 @@ class App extends React.Component {
       tokens: [],
       stacks: [],
       game: {
-        colors: 4,
-        colorSet: 4,
-        stacks: 7,
+        tokenSet: 4,
+        colorSet: 5,
+        stacks: 9,
         stackCapacity: 4
       },
       selectedStack: null,
@@ -53,7 +53,7 @@ class App extends React.Component {
 
     let tokens = [];
     let tokenCounter = 0;
-    for (let i = 0; i < (this.state.game.colors); i++) {
+    for (let i = 0; i < (this.state.game.tokenSet); i++) {
       for (var j = 0; j < this.state.game.colorSet; j++) {
         
         let chosenStack = this.chooseRandomStack(stacks);
@@ -206,7 +206,7 @@ class App extends React.Component {
     for (var i = 0; i < this.state.stacks.length; i++) {
       // console.log('Stack ' + i);
       // console.log('Contents: ' + this.state.stacks[i].contents);
-      if (this.state.stacks[i].contents.length !== this.state.game.colorSet && this.state.stacks[i].contents.length !== 0) {
+      if (this.state.stacks[i].contents.length !== this.state.game.tokenSet && this.state.stacks[i].contents.length !== 0) {
         // console.log('Stack not full, quit this check');
         return
       }
