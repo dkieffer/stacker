@@ -17,7 +17,7 @@ class App extends React.Component {
       game: {
         colors: 4,
         colorSet: 4,
-        stacks: 6,
+        stacks: 7,
         stackCapacity: 4
       },
       selectedStack: null,
@@ -34,26 +34,26 @@ class App extends React.Component {
   }
 
   startGame() {
-    // console.log('start game punks');
-
     const colors = ['#ed6635', '#fdba13', '#f9edd6', '#455987', '#1e2452'];
-    // let xPosSpacing = 80 / this.state.game.stacks;
     let xPosSpacing = 48;
+    var stackPositions = this.positionStacks(this.state.game.stacks);
+    console.log(stackPositions);
     let stacks = [];
-    for (var i = 0; i < this.state.game.stacks; i++) {
+    for (let i = 0; i < this.state.game.stacks; i++) {
       let stack = {
         id: i,
-        xPos: (i) * xPosSpacing,
-        yPos: 20,
+        xPos: stackPositions[i].xPos,
+        yPos: stackPositions[i].yPos,
         contents: [],
         selected: false
       }
       stacks.push(stack);
     }
+    console.log(stacks);
 
     let tokens = [];
     let tokenCounter = 0;
-    for (var i = 0; i < (this.state.game.colors); i++) {
+    for (let i = 0; i < (this.state.game.colors); i++) {
       for (var j = 0; j < this.state.game.colorSet; j++) {
         
         let chosenStack = this.chooseRandomStack(stacks);
@@ -63,7 +63,7 @@ class App extends React.Component {
           stack: chosenStack,
           stackPos: stacks[chosenStack].contents.length,
           xPos: stacks[chosenStack].xPos,
-          yPos: (stacks[chosenStack].contents.length * -5) + (stacks[chosenStack].yPos + 50)
+          yPos: (-stacks[chosenStack].contents.length * 48) + (stacks[chosenStack].yPos + 192 - 48)
         }
         tokenCounter++;
         stacks[chosenStack].contents.push(token.id)
@@ -74,7 +74,47 @@ class App extends React.Component {
       activeView: 'game',
       stacks: stacks,
       tokens: tokens
-    }))
+    }), function() {console.log(this.state.stacks)})
+  }
+
+  positionStacks(stacks) {
+    const maxRowLength = 5;
+    const stackWidth = 48;
+    const stackHeight = 192;
+    const stackSpacer = 12;
+
+    var stackQuantity = stacks;
+    var rowQuantity = Math.ceil(stackQuantity / maxRowLength);
+    var fullRowQuantity = Math.ceil(stackQuantity / rowQuantity);
+    var remainderRowQuantity = stackQuantity % fullRowQuantity;
+    if (remainderRowQuantity === 0) {
+      remainderRowQuantity = maxRowLength;
+    }
+    var rowInventory = [];
+    if (stackQuantity < maxRowLength) {
+      rowInventory.push(stackQuantity);
+    } else {
+      rowInventory.push(remainderRowQuantity);
+      for (var i = 0; i < rowQuantity - 1; i++) {
+        rowInventory.push(fullRowQuantity);
+      }
+    }
+    console.log(rowInventory);
+    
+    var stackPositions = [];
+    let centerYOffset = (((rowQuantity * stackHeight) + (rowQuantity - 1 * stackSpacer)) / 2);
+    for (var i = 0; i < rowInventory.length; i++) {
+      let centerXOffset = (((rowInventory[i] * stackWidth) + (rowInventory[i] - 1 * stackSpacer)) / 2);
+      for(var j = 0; j < rowInventory[i]; j++) {
+        let coords = {
+          xPos: (stackWidth * j) + (stackSpacer * j) - centerXOffset,
+          yPos: (stackHeight * i) + (stackSpacer * i) - centerYOffset
+        }
+        stackPositions.push(coords);
+      }
+    }
+    console.log(stackPositions);
+    return stackPositions;
   }
 
   chooseRandomStack(stackSet) {
@@ -148,7 +188,7 @@ class App extends React.Component {
         el => (el.id === key) ? {
           ...el,
           xPos: state.stacks[stackID].xPos,
-          yPos: (((state.stacks[stackID].contents.length) * -5) + state.stacks[stackID].yPos + 50)
+          yPos: ((-state.stacks[stackID].contents.length * 48) + (state.stacks[stackID].yPos + 192 - 48))
         } : el
       ),
       stacks: state.stacks.map(
