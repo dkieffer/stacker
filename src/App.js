@@ -16,7 +16,7 @@ class App extends React.Component {
       stacks: [],
       game: {
         tokenSet: 4,
-        colorSet: 5,
+        colorSet: 10,
         stacks: 19,
         stackCapacity: 4
       },
@@ -34,7 +34,7 @@ class App extends React.Component {
   }
 
   startGame() {
-    const colors = ['#ed6635', '#fdba13', '#f9edd6', '#455987', '#1e2452'];
+    const colors = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     let xPosSpacing = 48;
     var stackPositions = this.positionStacks(this.state.game.stacks);
     console.log(stackPositions);

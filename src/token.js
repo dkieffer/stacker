@@ -1,5 +1,6 @@
 import React from 'react';
 // import './App.css';
+import './colors.scss';
 
 class Token extends React.Component {
     constructor(props) {
@@ -8,11 +9,11 @@ class Token extends React.Component {
 
     render() {
         var divStyle = {
-            backgroundColor: this.props.color,
+            // backgroundColor: this.props.color,
             top: this.props.yPos,
             left: this.props.xPos
         };
-        let className = 'token';
+        let className = 'token ' + this.props.color;
         if (this.props.selected === this.props.id) {
             className += ' selected';
         }
