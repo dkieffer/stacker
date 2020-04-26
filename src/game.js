@@ -33,12 +33,13 @@ class Game extends React.Component {
     
         return (
             <div className={className}>
-                <div className="center-view">
+                <div>
                     {stacks}
                     {tokens}
                 </div>
                 <div>
-                    <button className="button" onClick={() => this.props.quitGame()}>Exit</button>
+                    <p className="hud">{this.props.level}</p>
+                    <button className="button exit-button" onClick={() => this.props.quitGame()}>Exit</button>
                 </div>
             </div>
         );

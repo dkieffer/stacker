@@ -14,8 +14,10 @@ class Menu extends React.Component {
 
         return (
             <div className={className}>
-                <h1>Stacker</h1>
-                <button className="button" onClick={() => this.props.startGame()}>Play</button>
+                <div className="center-view">
+                    <h1>Stacker</h1>
+                    <button className="button" onClick={() => this.props.startGame()}>Play</button>
+                </div>
             </div>
         )
     }

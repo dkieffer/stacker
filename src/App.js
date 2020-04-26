@@ -35,13 +35,15 @@ class App extends React.Component {
     this.initGame = this.initGame.bind(this);
   }
 
-  initGame() {
+  initGame(lvlup) {
     console.log('init game');
     if (!localStorage.getItem('level')) {
       localStorage.setItem('level', 1);
     }
     let lvl = localStorage.getItem('level');
-    lvl++;
+    if (lvlup) {
+      lvl++;
+    }
     localStorage.setItem('level', lvl);
 
     this.setState((state) => ({
@@ -291,8 +293,8 @@ class App extends React.Component {
 
     return (
         <div className="App">
-          <Menu startGame={this.initGame} activeView={this.state.activeView} />
-          <Win startGame={this.initGame} activeView={this.state.activeView} />
+          <Menu startGame={this.initGame} activeView={this.state.activeView} level={this.state.game.leve} />
+          <Win startGame={this.initGame} activeView={this.state.activeView} level={this.state.game.level} />
           <Game 
             stacks={this.state.stacks}
             game={this.state.game}
@@ -302,6 +304,7 @@ class App extends React.Component {
             activeView={this.state.activeView} 
             manageStackAction={this.manageStackAction}
             quitGame={this.quitGame}
+            level={this.state.game.level}
           />
 
         </div>

@@ -14,8 +14,10 @@ class Win extends React.Component {
 
         return (
             <div className={className}>
-                <h1>You Stacked</h1>
-                <button className="button" onClick={() => this.props.startGame()}>Continue</button>
+                <div className="center-view">
+                    <h1>You Stacked</h1>
+                    <button className="button" onClick={() => this.props.startGame(true)}>Continue</button>
+                </div>
             </div>
         )
     }
