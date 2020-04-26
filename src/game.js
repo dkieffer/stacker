@@ -18,7 +18,7 @@ class Game extends React.Component {
         for (var i = 0; i < this.props.stacks.length; i++) {
             let xPos = 'calc(50vw + ' + this.props.stacks[i].xPos + 'px)';
             let yPos = 'calc(' + this.props.stacks[i].yPos + 'px + 50vh)';
-            let height = '192px';
+            let height = '103px';
             console.log(this.props.stacks[i].yPos);
             console.log(yPos);
             stacks.push(<Stack top={yPos} left={xPos} height={height} id={i} function={this.props.manageStackAction} selected={this.props.selectedStack} />);

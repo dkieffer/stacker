@@ -17,7 +17,7 @@ class App extends React.Component {
       game: {
         tokenSet: 4,
         colorSet: 5,
-        stacks: 9,
+        stacks: 19,
         stackCapacity: 4
       },
       selectedStack: null,
@@ -63,7 +63,7 @@ class App extends React.Component {
           stack: chosenStack,
           stackPos: stacks[chosenStack].contents.length,
           xPos: stacks[chosenStack].xPos,
-          yPos: (-stacks[chosenStack].contents.length * 48) + (stacks[chosenStack].yPos + 192 - 48)
+          yPos: (-stacks[chosenStack].contents.length * 25) + (stacks[chosenStack].yPos + 103 - 25)
         }
         tokenCounter++;
         stacks[chosenStack].contents.push(token.id)
@@ -80,7 +80,7 @@ class App extends React.Component {
   positionStacks(stacks) {
     const maxRowLength = 5;
     const stackWidth = 48;
-    const stackHeight = 192;
+    const stackHeight = 103;
     const stackSpacer = 12;
 
     var stackQuantity = stacks;
@@ -88,7 +88,7 @@ class App extends React.Component {
     var fullRowQuantity = Math.ceil(stackQuantity / rowQuantity);
     var remainderRowQuantity = stackQuantity % fullRowQuantity;
     if (remainderRowQuantity === 0) {
-      remainderRowQuantity = maxRowLength;
+      remainderRowQuantity = fullRowQuantity;
     }
     var rowInventory = [];
     if (stackQuantity < maxRowLength) {
@@ -102,9 +102,9 @@ class App extends React.Component {
     console.log(rowInventory);
     
     var stackPositions = [];
-    let centerYOffset = (((rowQuantity * stackHeight) + (rowQuantity - 1 * stackSpacer)) / 2);
+    let centerYOffset = (((rowQuantity * stackHeight) + ((rowQuantity - 1) * stackSpacer)) / 2);
     for (var i = 0; i < rowInventory.length; i++) {
-      let centerXOffset = (((rowInventory[i] * stackWidth) + (rowInventory[i] - 1 * stackSpacer)) / 2);
+      let centerXOffset = (((rowInventory[i] * stackWidth) + ((rowInventory[i] - 1) * stackSpacer)) / 2);
       for(var j = 0; j < rowInventory[i]; j++) {
         let coords = {
           xPos: (stackWidth * j) + (stackSpacer * j) - centerXOffset,
@@ -188,7 +188,7 @@ class App extends React.Component {
         el => (el.id === key) ? {
           ...el,
           xPos: state.stacks[stackID].xPos,
-          yPos: ((-state.stacks[stackID].contents.length * 48) + (state.stacks[stackID].yPos + 192 - 48))
+          yPos: ((-state.stacks[stackID].contents.length * 25) + (state.stacks[stackID].yPos + 103 - 25))
         } : el
       ),
       stacks: state.stacks.map(

@@ -65,8 +65,9 @@
 
 .token {
   width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  height: 25px;
+  background: #FF4646;
+  border-radius: 7px;
   z-index: 1;
   position: absolute;
   pointer-events: none;
