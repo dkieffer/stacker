@@ -16,9 +16,10 @@ class App extends React.Component {
       stacks: [],
       game: {
         tokenSet: 4,
-        colorSet: 10,
-        stacks: 19,
-        stackCapacity: 4
+        colorSet: 2,
+        stacks: 3,
+        stackCapacity: 4,
+        level: 1
       },
       selectedStack: null,
       previouslySelectedStack: null,
@@ -31,9 +32,41 @@ class App extends React.Component {
     this.deselectStack = this.deselectStack.bind(this);
     this.moveToken = this.moveToken.bind(this);
     this.quitGame = this.quitGame.bind(this);
+    this.initGame = this.initGame.bind(this);
+  }
+
+  initGame() {
+    console.log('init game');
+    if (!localStorage.getItem('level')) {
+      localStorage.setItem('level', 1);
+    }
+    let lvl = localStorage.getItem('level');
+    lvl++;
+    localStorage.setItem('level', lvl);
+
+    this.setState((state) => ({
+      game: {
+        ...state.game,
+        level: lvl
+      }
+    }), function() {this.setupGame()})
+  }
+
+  setupGame() {
+    console.log('setup game');
+    var stackQuantity = (Math.floor(this.state.game.level * 0.25) + 3);
+    console.log('stack quantity: ' + stackQuantity);
+    this.setState((state) => ({
+      game: {
+        ...state.game,
+        stacks: stackQuantity,
+        colorSet: stackQuantity - 1
+      }
+    }), function() {this.startGame()})
   }
 
   startGame() {
+    console.log('start game');
     const colors = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
     let xPosSpacing = 48;
     var stackPositions = this.positionStacks(this.state.game.stacks);
@@ -70,6 +103,7 @@ class App extends React.Component {
         tokens.push(token);
       }
     }
+    console.log('ready to set state');
     this.setState((state) => ({
       activeView: 'game',
       stacks: stacks,
@@ -78,6 +112,7 @@ class App extends React.Component {
   }
 
   positionStacks(stacks) {
+    console.log('position stacks');
     const maxRowLength = 5;
     const stackWidth = 48;
     const stackHeight = 103;
@@ -99,7 +134,7 @@ class App extends React.Component {
         rowInventory.push(fullRowQuantity);
       }
     }
-    console.log(rowInventory);
+    // console.log(rowInventory);
     
     var stackPositions = [];
     let centerYOffset = (((rowQuantity * stackHeight) + ((rowQuantity - 1) * stackSpacer)) / 2);
@@ -113,11 +148,12 @@ class App extends React.Component {
         stackPositions.push(coords);
       }
     }
-    console.log(stackPositions);
+    // console.log(stackPositions);
     return stackPositions;
   }
 
   chooseRandomStack(stackSet) {
+    console.log('choose random stack');
     var stackChoice = Math.floor(Math.random() * this.state.game.stacks);
     while (stackSet[stackChoice].contents.length > this.state.game.stackCapacity - 1) {
       stackChoice = Math.floor(Math.random() * this.state.game.stacks)
@@ -139,7 +175,7 @@ class App extends React.Component {
       if (this.state.selectedStack === id) {
         this.deselectStack(id);
       } else {
-        if (this.state.stacks[id].contents.length >= this.state.game.colorSet) {
+        if (this.state.stacks[id].contents.length >= this.state.game.stackCapacity) {
           this.deselectStack(this.state.previouslySelectedStack);
         } else {
           let oldStackContent = Array.from(this.state.stacks[this.state.previouslySelectedStack].contents);
@@ -255,8 +291,8 @@ class App extends React.Component {
 
     return (
         <div className="App">
-          <Menu startGame={this.startGame} activeView={this.state.activeView} />
-          <Win startGame={this.startGame} activeView={this.state.activeView} />
+          <Menu startGame={this.initGame} activeView={this.state.activeView} />
+          <Win startGame={this.initGame} activeView={this.state.activeView} />
           <Game 
             stacks={this.state.stacks}
             game={this.state.game}
