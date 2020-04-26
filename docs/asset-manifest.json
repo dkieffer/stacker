@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/dkieffer/stacker/static/css/main.8f9334af.chunk.css",
-    "main.js": "/dkieffer/stacker/static/js/main.f8080cb4.chunk.js",
-    "main.js.map": "/dkieffer/stacker/static/js/main.f8080cb4.chunk.js.map",
-    "runtime-main.js": "/dkieffer/stacker/static/js/runtime-main.14600e1a.js",
-    "runtime-main.js.map": "/dkieffer/stacker/static/js/runtime-main.14600e1a.js.map",
-    "static/js/2.9dcfd0d3.chunk.js": "/dkieffer/stacker/static/js/2.9dcfd0d3.chunk.js",
-    "static/js/2.9dcfd0d3.chunk.js.map": "/dkieffer/stacker/static/js/2.9dcfd0d3.chunk.js.map",
-    "index.html": "/dkieffer/stacker/index.html",
-    "precache-manifest.5d23da4152ab988331aba4b151106bb9.js": "/dkieffer/stacker/precache-manifest.5d23da4152ab988331aba4b151106bb9.js",
-    "service-worker.js": "/dkieffer/stacker/service-worker.js",
-    "static/css/main.8f9334af.chunk.css.map": "/dkieffer/stacker/static/css/main.8f9334af.chunk.css.map",
-    "static/js/2.9dcfd0d3.chunk.js.LICENSE.txt": "/dkieffer/stacker/static/js/2.9dcfd0d3.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/dkieffer/stacker/static/media/logo.5d5d9eef.svg"
+    "main.css": "/dkieffer/stacker/docs/static/css/main.8f9334af.chunk.css",
+    "main.js": "/dkieffer/stacker/docs/static/js/main.bdb05eb0.chunk.js",
+    "main.js.map": "/dkieffer/stacker/docs/static/js/main.bdb05eb0.chunk.js.map",
+    "runtime-main.js": "/dkieffer/stacker/docs/static/js/runtime-main.b4a18f3d.js",
+    "runtime-main.js.map": "/dkieffer/stacker/docs/static/js/runtime-main.b4a18f3d.js.map",
+    "static/js/2.9dcfd0d3.chunk.js": "/dkieffer/stacker/docs/static/js/2.9dcfd0d3.chunk.js",
+    "static/js/2.9dcfd0d3.chunk.js.map": "/dkieffer/stacker/docs/static/js/2.9dcfd0d3.chunk.js.map",
+    "index.html": "/dkieffer/stacker/docs/index.html",
+    "precache-manifest.6755334f6a2dd0862d29e7288b256827.js": "/dkieffer/stacker/docs/precache-manifest.6755334f6a2dd0862d29e7288b256827.js",
+    "service-worker.js": "/dkieffer/stacker/docs/service-worker.js",
+    "static/css/main.8f9334af.chunk.css.map": "/dkieffer/stacker/docs/static/css/main.8f9334af.chunk.css.map",
+    "static/js/2.9dcfd0d3.chunk.js.LICENSE.txt": "/dkieffer/stacker/docs/static/js/2.9dcfd0d3.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/dkieffer/stacker/docs/static/media/logo.5d5d9eef.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.14600e1a.js",
+    "static/js/runtime-main.b4a18f3d.js",
     "static/js/2.9dcfd0d3.chunk.js",
     "static/css/main.8f9334af.chunk.css",
-    "static/js/main.f8080cb4.chunk.js"
+    "static/js/main.bdb05eb0.chunk.js"
   ]
 }
