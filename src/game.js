@@ -40,6 +40,7 @@ class Game extends React.Component {
                 <div>
                     <p className="hud">{this.props.level}</p>
                     <button className="button exit-button" onClick={() => this.props.quitGame()}>Exit</button>
+                    <p className="counter">{this.props.moveCounter}</p>
                 </div>
             </div>
         );

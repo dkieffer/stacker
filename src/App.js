@@ -23,7 +23,8 @@ class App extends React.Component {
       },
       selectedStack: null,
       previouslySelectedStack: null,
-      selectedToken: null
+      selectedToken: null,
+      moveCounter: 0
     }
     this.chooseRandomStack = this.chooseRandomStack.bind(this);
     this.startGame = this.startGame.bind(this);
@@ -50,7 +51,8 @@ class App extends React.Component {
       game: {
         ...state.game,
         level: lvl
-      }
+      },
+      moveCounter: 0
     }), function() {this.setupGame()})
   }
 
@@ -234,7 +236,8 @@ class App extends React.Component {
           ...el,
           contents: newStackContent,
         } : el
-      )
+      ),
+      moveCounter: state.moveCounter++
     }), this.checkForWin)
     // console.log(this.state.stacks);
   }
@@ -305,6 +308,7 @@ class App extends React.Component {
             manageStackAction={this.manageStackAction}
             quitGame={this.quitGame}
             level={this.state.game.level}
+            moveCounter={this.state.moveCounter}
           />
 
         </div>
