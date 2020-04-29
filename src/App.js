@@ -6,6 +6,7 @@ import Token from './token';
 import Menu from './menu';
 import Win from './win';
 import Game from './game';
+import Settings from './settings';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,7 +25,8 @@ class App extends React.Component {
       selectedStack: null,
       previouslySelectedStack: null,
       selectedToken: null,
-      moveCounter: 0
+      moveCounter: 0,
+      previousView: 'start'
     }
     this.chooseRandomStack = this.chooseRandomStack.bind(this);
     this.startGame = this.startGame.bind(this);
@@ -34,6 +36,8 @@ class App extends React.Component {
     this.moveToken = this.moveToken.bind(this);
     this.quitGame = this.quitGame.bind(this);
     this.initGame = this.initGame.bind(this);
+    this.toggleSettings = this.toggleSettings.bind(this);
+    this.startOver = this.startOver.bind(this);
   }
 
   initGame(lvlup) {
@@ -279,6 +283,29 @@ class App extends React.Component {
     console.log(this.state);
   }
 
+  toggleSettings() {
+    if (this.state.activeView !== 'settings') {
+      this.setState((state) => ({
+        activeView: 'settings',
+        previousView: state.previousView
+      }));
+    } else {
+      this.setState((state) => ({
+        activeView: state.previousView,
+        previousView: 'settings'
+      }));
+    }
+  }
+
+  startOver() {
+    localStorage.setItem('level', 1);
+    this.setState((state) => ({
+      game: {
+        ...state.game,
+        level: 1
+      }
+    }))
+  }
 
   render() {
     let stacks = [];
@@ -296,7 +323,18 @@ class App extends React.Component {
 
     return (
         <div className="App">
-          <Menu startGame={this.initGame} activeView={this.state.activeView} level={this.state.game.leve} />
+          <Settings 
+            activeView={this.state.activeView}
+            quitGame={this.quitGame}
+            level={this.state.game.level}
+            startOver={this.startOver}
+          />
+          <Menu
+            initGame={this.initGame}
+            activeView={this.state.activeView}
+            level={this.state.game.level} 
+            toggleSettings={this.toggleSettings}
+          />
           <Win startGame={this.initGame} activeView={this.state.activeView} level={this.state.game.level} />
           <Game 
             stacks={this.state.stacks}
