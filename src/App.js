@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Stack from './stack';
 import Token from './token';
@@ -39,6 +38,23 @@ class App extends React.Component {
     this.toggleSettings = this.toggleSettings.bind(this);
     this.startOver = this.startOver.bind(this);
   }
+  componentDidMount() {
+    console.log('hey der hey')
+    this.checkSavedLevel();
+  }
+
+  checkSavedLevel() {
+    if (!localStorage.getItem('level')) {
+      localStorage.setItem('level', 1);
+    }
+    let lvl = localStorage.getItem('level');
+    this.setState((state) => ({
+      game: {
+        ...state.game,
+        level: lvl
+      }
+    }))
+  }
 
   initGame(lvlup) {
     console.log('init game');
@@ -52,10 +68,6 @@ class App extends React.Component {
     localStorage.setItem('level', lvl);
 
     this.setState((state) => ({
-      game: {
-        ...state.game,
-        level: lvl
-      },
       moveCounter: 0
     }), function() {this.setupGame()})
   }
