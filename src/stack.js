@@ -1,29 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
-// import './App.css';
 
-class Stack extends React.Component {
-    constructor(props) {
-        super(props);
+function Stack(props) {
+    const divStyle = {
+        top: props.top,
+        left: props.left,
+        height: props.height
+    };
+    let id = props.id;
+    let className = 'stack';
+    if (props.selected === props.id) {
+        className += ' selected';
     }
 
-    render() {
-        const divStyle = {
-            top: this.props.top,
-            left: this.props.left,
-            height: this.props.height
-        };
-        let id = this.props.id;
-        let className = 'stack';
-        // console.log(this.props.selected);
-        if (this.props.selected === this.props.id) {
-            className += ' selected';
-        }
-
-        return (
-            <div id={'s' + this.props.id} className={className} style={divStyle} onClick={() => this.props.function(id)}></div>
-        )
-    }
+    return (
+        <div id={'s' + props.id} className={className} style={divStyle} onClick={() => props.function(id)}></div>
+    )
 }
 
 export default Stack

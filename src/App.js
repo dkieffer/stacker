@@ -39,7 +39,7 @@ class App extends React.Component {
     this.startOver = this.startOver.bind(this);
   }
   componentDidMount() {
-    console.log('hey der hey')
+    // console.log('hey der hey')
     this.checkSavedLevel();
   }
 
@@ -61,14 +61,18 @@ class App extends React.Component {
     if (!localStorage.getItem('level')) {
       localStorage.setItem('level', 1);
     }
-    let lvl = localStorage.getItem('level');
+    let lvl = this.state.game.level;
     if (lvlup) {
       lvl++;
     }
     localStorage.setItem('level', lvl);
 
     this.setState((state) => ({
-      moveCounter: 0
+      moveCounter: 0,
+      game: {
+        ...state.game,
+        level: lvl
+      }
     }), function() {this.setupGame()})
   }
 
@@ -88,7 +92,7 @@ class App extends React.Component {
   startGame() {
     console.log('start game');
     const colors = ['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-    let xPosSpacing = 48;
+    // let xPosSpacing = 48;
     var stackPositions = this.positionStacks(this.state.game.stacks);
     console.log(stackPositions);
     let stacks = [];
@@ -150,7 +154,7 @@ class App extends React.Component {
       rowInventory.push(stackQuantity);
     } else {
       rowInventory.push(remainderRowQuantity);
-      for (var i = 0; i < rowQuantity - 1; i++) {
+      for (let i = 0; i < rowQuantity - 1; i++) {
         rowInventory.push(fullRowQuantity);
       }
     }
@@ -158,7 +162,7 @@ class App extends React.Component {
     
     var stackPositions = [];
     let centerYOffset = (((rowQuantity * stackHeight) + ((rowQuantity - 1) * stackSpacer)) / 2);
-    for (var i = 0; i < rowInventory.length; i++) {
+    for (let i = 0; i < rowInventory.length; i++) {
       let centerXOffset = (((rowInventory[i] * stackWidth) + ((rowInventory[i] - 1) * stackSpacer)) / 2);
       for(var j = 0; j < rowInventory[i]; j++) {
         let coords = {
@@ -260,14 +264,14 @@ class App extends React.Component {
 
   checkForWin() {
     console.log('CHECK FOR WIN');
-    for (var i = 0; i < this.state.stacks.length; i++) {
+    for (let i = 0; i < this.state.stacks.length; i++) {
       // console.log('Stack ' + i);
       // console.log('Contents: ' + this.state.stacks[i].contents);
       if (this.state.stacks[i].contents.length !== this.state.game.tokenSet && this.state.stacks[i].contents.length !== 0) {
         // console.log('Stack not full, quit this check');
         return
       }
-      for (var j = 0; j < this.state.stacks[i].contents.length; j++) {
+      for (let j = 0; j < this.state.stacks[i].contents.length; j++) {
         console.log('stack '  + i + ', token ' + j);
         if (this.state.tokens[this.state.stacks[i].contents[j]].color !== this.state.tokens[this.state.stacks[i].contents[0]].color) {
           // console.log('fail');
@@ -321,13 +325,13 @@ class App extends React.Component {
 
   render() {
     let stacks = [];
-    for (var i = 0; i < this.state.stacks.length; i++) {
+    for (let i = 0; i < this.state.stacks.length; i++) {
       let xPos = this.state.stacks[i].xPos  + '%';
       let height = (this.state.game.stackCapacity * 45) + 'px';
       stacks.push(<Stack top="50%" left={xPos} height={height} id={i} function={this.manageStackAction} selected={this.state.selectedStack} />);
     }
     let tokens = [];
-    for (var i = 0; i < this.state.tokens.length; i++) {
+    for (let i = 0; i < this.state.tokens.length; i++) {
       let xPos = this.state.tokens[i].xPos  + '%';
       let yPos = this.state.tokens[i].yPos  + '%';
       tokens.push(<Token id={this.state.tokens[i].id} color={this.state.tokens[i].color} xPos={xPos} yPos={yPos} selected={this.state.selectedToken} />);

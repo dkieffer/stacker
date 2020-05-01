@@ -1,28 +1,20 @@
 import React from 'react';
-// import './App.css';
 
-class Settings extends React.Component {
-    constructor(props) {
-        super(props);
+function Settings(props) {
+    let className = 'view';
+    if (props.activeView === 'settings') {
+        className += ' active';
     }
 
-    render() {
-        let className = 'view';
-        if (this.props.activeView === 'settings') {
-            className += ' active';
-        }
-
-        return (
-            <div className={className}>
-                <div className="">
-                    <h1>Settings</h1>
-                    <p>Level {this.props.level}<button className="button" onClick={() => this.props.startOver()}>Start Over</button></p>
-                    <button className="button exit-button top left" onClick={() => this.props.quitGame()}>Exit</button>
-
-                </div>
+    return (
+        <div className={className}>
+            <div className="">
+                <h1>Settings</h1>
+                <p>Level {props.level}<button className="button" onClick={() => props.startOver()}>Start Over</button></p>
+                <button className="button exit-button top left" onClick={() => props.quitGame()}>Exit</button>
             </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default Settings

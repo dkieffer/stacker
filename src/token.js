@@ -1,26 +1,18 @@
 import React from 'react';
-// import './App.css';
 import './colors.scss';
 
-class Token extends React.Component {
-    constructor(props) {
-        super(props);
+function Token(props) {
+    var divStyle = {
+        top: props.yPos,
+        left: props.xPos
+    };
+    let className = 'token ' + props.color;
+    if (props.selected === props.id) {
+        className += ' selected';
     }
-
-    render() {
-        var divStyle = {
-            // backgroundColor: this.props.color,
-            top: this.props.yPos,
-            left: this.props.xPos
-        };
-        let className = 'token ' + this.props.color;
-        if (this.props.selected === this.props.id) {
-            className += ' selected';
-        }
-        return (
-            <div className={className} style={divStyle} id={'t' + this.props.id}></div>
-        )
-    }
+    return (
+        <div className={className} style={divStyle} id={'t' + props.id}></div>
+    )
 }
 
 export default Token
