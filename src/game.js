@@ -23,7 +23,8 @@ function Game(props) {
     for (let i = 0; i < props.tokens.length; i++) {
         let xPos = 'calc(' + props.tokens[i].xPos + 'px + 50vw)';
         let yPos = 'calc(' + props.tokens[i].yPos + 'px + 50vh)';
-        tokens.push(<Token id={props.tokens[i].id} key={i} color={props.tokens[i].color} xPos={xPos} yPos={yPos} selected={props.selectedToken} />);
+        let zIndex = props.tokens[i].zIndex;
+        tokens.push(<Token id={props.tokens[i].id} key={i} color={props.tokens[i].color} xPos={xPos} yPos={yPos} zIndex={zIndex} selected={props.selectedToken} />);
     }
 
     return (

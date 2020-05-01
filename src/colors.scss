@@ -1,51 +1,86 @@
-$one: #0466C8;
-$two: #44CCFF;
-$three: #A6EBC9;
-$four: #35605A;
-$five: #95E06C;
-$six: #EDFF7A;
-$seven: #EDAE49;
-$eight: #F93943;
-$nine: #FCB0B3;
-$ten: #FF70A6;
+$color-set: (
+    "one": #0466C8,
+    "two": #44CCFF,
+    "three": #A6EBC9,
+    "four": #35605A,
+    "five": #95E06C,
+    "six": #EDFF7A,
+    "seven": #EDAE49,
+    "eight": #F93943,
+    "nine": #FCB0B3,
+    "ten": #FF70A6
+);
 
-.one {
-    background-color: $one;
-    box-shadow: 0px -7px 0px darken($one, 8) inset;
+@each $key, $value in $color-set {
+    .#{$key} {
+        background-color: $value;
+        box-shadow:
+        inset 0px -3px 7px lighten($value, 2),
+            inset 0px -7px 0px darken($value, 8),
+            
+            0 3px 3px rgba(12,32,14,0.2);
+    }
 }
-.two {
-    background-color: $two;
-    box-shadow: 0px -7px 0px darken($two, 8)  inset;
-}
-.three {
-    background-color: $three;
-    box-shadow: 0px -7px 0px darken($three, 8) inset;
-}
-.four {
-    background-color: $four;
-    box-shadow: 0px -7px 0px darken($four, 8) inset;
-}
-.five {
-    background-color: $five;
-    box-shadow: 0px -7px 0px darken($five, 8) inset;
-}
-.six {
-    background-color: $six;
-    box-shadow: 0px -7px 0px darken($six, 8) inset;
-}
-.seven {
-    background-color: $seven;
-    box-shadow: 0px -7px 0px darken($seven, 8) inset;
-}
-.eight {
-    background-color: $eight;
-    box-shadow: 0px -7px 0px darken($eight, 8) inset;
-}
-.nine {
-    background-color: $nine;
-    box-shadow: 0px -7px 0px darken($nine, 8) inset;
-}
-.ten {
-    background-color: $ten;
-    box-shadow: 0px -7px 0px darken($ten, 8) inset;
-}
+
+// $one: #0466C8;
+// $two: #44CCFF;
+// $three: #A6EBC9;
+// $four: #35605A;
+// $five: #95E06C;
+// $six: #EDFF7A;
+// $seven: #EDAE49;
+// $eight: #F93943;
+// $nine: #FCB0B3;
+// $ten: #FF70A6;
+
+// $dropshadow: 0 3px 3px rgba(12,32,14,0.2);
+// .one {
+//     background-color: $one;
+//     box-shadow: 0px -7px 0px darken($one, 8) inset,
+//     $dropshadow;
+// }
+// .two {
+//     background-color: $two;
+//     box-shadow: 0px -7px 0px darken($two, 8)  inset,
+//     $dropshadow;
+// }
+// .three {
+//     background-color: $three;
+//     box-shadow: 0px -7px 0px darken($three, 8) inset,
+//     $dropshadow;
+// }
+// .four {
+//     background-color: $four;
+//     box-shadow: 0px -7px 0px darken($four, 8) inset,
+//     $dropshadow;
+// }
+// .five {
+//     background-color: $five;
+//     box-shadow: 0px -7px 0px darken($five, 8) inset,
+//     $dropshadow;
+// }
+// .six {
+//     background-color: $six;
+//     box-shadow: 0px -7px 0px darken($six, 8) inset,
+//     $dropshadow;
+// }
+// .seven {
+//     background-color: $seven;
+//     box-shadow: 0px -7px 0px darken($seven, 8) inset,
+//     $dropshadow;
+// }
+// .eight {
+//     background-color: $eight;
+//     box-shadow: 0px -7px 0px darken($eight, 8) inset,
+//     $dropshadow;
+// }
+// .nine {
+//     background-color: $nine;
+//     box-shadow: 0px -7px 0px darken($nine, 8) inset,
+//     $dropshadow;
+// }
+// .ten {
+//     background-color: $ten;
+//     box-shadow: 0px -7px 0px darken($ten, 8) inset,
+//     $dropshadow;
+// }

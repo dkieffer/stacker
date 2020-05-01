@@ -248,7 +248,8 @@ class App extends React.Component {
         el => (el.id === key) ? {
           ...el,
           xPos: state.stacks[stackID].xPos,
-          yPos: ((-state.stacks[stackID].contents.length * 25) + (state.stacks[stackID].yPos + 103 - 25))
+          yPos: ((-state.stacks[stackID].contents.length * 25) + (state.stacks[stackID].yPos + 103 - 25)),
+          zIndex: state.stacks[stackID].contents.length
         } : el
       ),
       stacks: state.stacks.map(
